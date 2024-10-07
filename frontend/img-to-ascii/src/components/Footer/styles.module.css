@@ -1,0 +1,14 @@
+.footer{
+    background-color: var(--blocks-color);
+    padding: 10px 0;
+}
+
+.footer__inner{
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer__text{
+    width: 100%;
+    font-size: var(--fz-small);
+}
