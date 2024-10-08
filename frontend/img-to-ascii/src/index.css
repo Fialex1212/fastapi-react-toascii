@@ -1,5 +1,5 @@
 :root{
-    --text-primary: #EEEEEE;
+    --cream: #EEEEEE;
     --bcg-color: #222831;
 
     --blocks-color: #31363F;
@@ -98,7 +98,7 @@ legend {
 body {
     font-family: 'Kanit', sans-serif;
     background-color: var(--bcg-color);
-    color: var(--text-primary);
+    color: var(--cream);
 }
 
 .container{

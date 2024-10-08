@@ -12,3 +12,19 @@
     width: 100%;
     font-size: var(--fz-small);
 }
+
+.footer__link{
+    width: 24px;
+    height: 24px;
+}
+
+.footer__github{
+    width: 24px;
+    height: 24px;
+    transition: .3s;
+}
+
+.footer__github:hover{
+    color: rgb(193, 226, 255);
+    transition: .3s;
+}
