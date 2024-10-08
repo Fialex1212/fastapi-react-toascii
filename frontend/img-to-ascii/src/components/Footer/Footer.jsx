@@ -1,7 +1,5 @@
-import React from "react";
 import css from "./styles.module.css";
 import { FaGithub } from "react-icons/fa";
-import cn from "classnames";
 
 const Footer = () => {
   return (

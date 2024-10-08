@@ -1,15 +1,14 @@
-from fastapi import APIRouter, UploadFile,  HTTPException, BackgroundTasks
+from fastapi import (
+    APIRouter, 
+    UploadFile,  
+    HTTPException, 
+    BackgroundTasks
+)
 from fastapi.responses import FileResponse
 import io, os, asyncio, requests, random, PIL.Image
-from .utils import (
-    ASCIIConverter
-)
-from pydantic import BaseModel, ValidationError
+from .utils import ASCIIConverter
 
 router = APIRouter()
-
-class ImageUpload(BaseModel):
-    image: str  # Adjust the field type according to your requirement
 
 @router.get("/")
 async def root():
@@ -33,14 +32,12 @@ async def get_txt_img(file: UploadFile, background_tasks: BackgroundTasks):
     pixel_count = len(new_image)
     ascii_image = "\n".join(new_image[i:(i+200)] for i in range(0, pixel_count, 200))
 
-     # Save ASCII image to a file
     output_path = f"{file.filename}.txt"
     with open(output_path, "w") as file:
         file.write(ascii_image)
         
     background_tasks.add_task(delete_file_after_delay, output_path, 10)
 
-    # Return the file for download
     return FileResponse(path=output_path, filename=output_path, media_type='text/plain')
 
 
@@ -60,7 +57,6 @@ async def get_txt_img(url: str, background_tasks: BackgroundTasks):
     pixel_count = len(new_image)
     ascii_image = "\n".join(new_image[i:(i+200)] for i in range(0, pixel_count, 200))
 
-     # Save ASCII image to a file
     name = "".join(map(str, [random.randint(0, 10) for i in range(10)]))
     output_path = str(name)+".txt"
     with open(output_path, "w") as file:
@@ -68,10 +64,9 @@ async def get_txt_img(url: str, background_tasks: BackgroundTasks):
         
     background_tasks.add_task(delete_file_after_delay, output_path, 10)
 
-    # Return the file for download
     return FileResponse(path=output_path, filename=output_path, media_type='text/plain')
 
 async def delete_file_after_delay(file_path: str, delay: int):
-    await asyncio.sleep(delay)  # Wait for the specified delay
+    await asyncio.sleep(delay)
     if os.path.exists(file_path):
-        os.remove(file_path)  # Delete the file
+        os.remove(file_path)
