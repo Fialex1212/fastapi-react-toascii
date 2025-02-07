@@ -6,7 +6,7 @@ from fastapi import (
 )
 from fastapi.responses import FileResponse
 import io, os, asyncio, requests, random, PIL.Image
-from .utils import ASCIIConverter
+from utils import ASCIIConverter
 
 router = APIRouter()
 

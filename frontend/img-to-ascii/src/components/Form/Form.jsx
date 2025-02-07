@@ -89,6 +89,10 @@ const Form = () => {
     }
   };
 
+  //TODO add image preveiw for link and image
+  //TODO also use TailwindCSS instead of styles.module.css
+  //TODO preview
+
   return (
     <section className={css.form__section}>
       <Toaster />

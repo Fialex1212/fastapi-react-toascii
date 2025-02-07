@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from .routers import router 
-from .cors import add_cors
+from routers import router
+from cors import add_cors
 
 app = FastAPI()
 add_cors(app)
