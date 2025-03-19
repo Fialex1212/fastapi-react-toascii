@@ -24,6 +24,8 @@ The ASCII Art Converter is a web application that allows users to upload images 
 
 **Image Processing:** Pillow
 
+**Database** SQLite
+
 ## Installation
 
 Clone my project
