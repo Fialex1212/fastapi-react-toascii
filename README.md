@@ -83,7 +83,7 @@ Run the backend
 }
 ```
 
-### Get Text from Image File
+### Conver image to .txt file by image
 
 ```
   POST /get-txt-by-img-file
@@ -100,7 +100,7 @@ Run the backend
 }
 ```
 
-### Get Text from Image URL
+### Conver image to .txt file by url
 
 ```
   POST /get-txt-by-img-url
