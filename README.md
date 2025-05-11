@@ -49,152 +49,78 @@ Run the backend
   .\venv\scripts\activate
   pip install requirements.txt
   uvicorn src.main:app
-```## API Reference
-
-### Create a todo
-
-```http
-  POST /api/todo/create
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `todo` | `TodoCreate` | **Required**. Data of task |
+## API Reference
 
-#### Query example
-```json
+### Ping
+
+```
+  GET /ping
+```
+
+#### Response example
+```
 {
-    "title": "Create new app",
-    "description": "Create new app with cool functional",
-}
-```
-#### Response example
-```json
-  {
-    "title": "Title",
-    "description": "Description",
-    "is_completed": false,
-    "id": "a46283a7-368d-4725-a4e2-dcf6698bc4a8",
-    "created_at": "2024-09-26T15:40:37.044667",
-    "updated_at": "2024-09-26T15:40:37.044667"
-  }
-```
-### Get todo
-
-```http
-  GET /api/todo/get/{todo_id}
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `todo_id`      | `string` | **Required**. Id of todo |
-
-#### Response example
-```json
-  {
-    "title": "Title",
-    "description": "Description",
-    "is_completed": false,
-    "id": "a46283a7-368d-4725-a4e2-dcf6698bc4a8",
-    "created_at": "2024-09-26T15:40:37.044667",
-    "updated_at": "2024-09-26T15:40:37.044667"
-  }
-```
-
-### Get list of todo
-
-```http
-  GET /api/todo/list?skip={skip}&limit={limit}
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `skip`      | `int` | Skip first N tasks (default 0) |
-| `limit`      | `int` | Limit the number of tasks (default 100) |
-
-#### Response example
-```json
-[
-  {
-    "title": "Title",
-    "description": "Description",
-    "is_completed": false,
-    "id": "a2dc9498-1da2-4106-8dd5-8093028912ae",
-    "created_at": "2024-09-26T15:40:37.044667",
-    "updated_at": "2024-09-26T15:40:37.044667"
-  },
-  {
-    "title": "Title",
-    "description": "Description",
-    "is_completed": false,
-    "id": "a46283a7-368d-4725-a4e2-dcf6698bc4a8",
-    "created_at": "2024-09-26T15:40:37.044667",
-    "updated_at": "2024-09-26T15:40:37.044667"
-  }
-]
-```
-### Update todo
-
-```http
-  PUT /api/todo/update/{todo_id}
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `todo_id`      | `string` | **Required**. Id of todo |
-
-#### Query example
-```json
-{
-  "title": "Title",
-  "description": "Description",
-  "is_completed": true
-}
-```
-#### Response example
-```json
-{
-  "created_at": "2024-09-26T15:40:37.044667",
-  "description": "Description",
-  "is_completed": false,
-  "id": "a46283a7-368d-4725-a4e2-dcf6698bc4a8",
-  "title": "Title",
-  "updated_at": "2024-09-26T15:40:37.044667"
+  "message": "PONG"
 }
 ```
 
-### Delete todo
+### Read Filename
 
-```http
-  DELETE /api/todo/delete/{todo_id}
+```
+  GET /read-filename
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `todo_id`      | `string` | **Required**. Id of todo |
-
+| Parameter | Type       | Description                        |
+| :-------- | :--------- | :--------------------------------- |
+| `file`    | `UploadFile` | **Required**. Image file to extract the filename |
 
 #### Response example
-```json
+```
 {
-  "created_at": "2024-09-26T15:40:37.044667",
-  "description": "Description",
-  "is_completed": false,
-  "id": "a46283a7-368d-4725-a4e2-dcf6698bc4a8",
-  "title": "Title",
-  "updated_at": "2024-09-26T15:40:37.044667"
+  "filename": "image.jpg"
 }
 ```
+
+### Get Text from Image File
+
+```
+  POST /get-txt-by-img-file
+```
+
+| Parameter | Type       | Description                                      |
+| :-------- | :--------- | :----------------------------------------------- |
+| `file`    | `UploadFile` | **Required**. Image file to extract text from |
+
+#### Response example
+```
+{
+  file in .txt format
+}
+```
+
+### Get Text from Image URL
+
+```
+  POST /get-txt-by-img-url
+```
+
+| Parameter | Type     | Description                                  |
+| :-------- | :------- | :------------------------------------------- |
+| `url`     | `string` | **Required**. URL of the image to extract text from |
+
+#### Response example
+```
+{
+  file in .txt format
+}
+```
+
+
 ## Screenshots
 
-### Desktop
 ![Desktop app Screenshot](./images/1.jpg)
-
-### Table
-![Table app Screenshot](./images/2.jpg)
-
-### Mobile
-![Mobile app Screenshot](./images/3.jpg)
 
 
 ## Authors
