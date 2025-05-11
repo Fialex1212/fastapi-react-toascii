@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from routers import router
+from api import ascii
 from cors import add_cors
 
 app = FastAPI()
 add_cors(app)
-app.include_router(router, prefix="/api", tags=["api"])
+app.include_router(ascii.router, prefix="/api", tags=["api"])
