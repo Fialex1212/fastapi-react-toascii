@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root{
     --cream: #EEEEEE;
     --bcg-color: #222831;
@@ -5,12 +7,6 @@
     --blocks-color: #31363F;
 
     --fz-small: 16px;
-}
-
-* {
-	padding: 0px;
-	margin: 0px;
-	border: none;
 }
 
 *,
@@ -58,31 +54,9 @@ address {
   font-style: normal;
 }
 
-/* Form */
-
-input, textarea, button, select {
-	font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-    background-color: transparent;
-}
-
-input::-ms-clear {
-	display: none;
-}
-
-input:focus, input:active,
-button:focus, button:active {
-    outline: none;
-}
-
 button::-moz-focus-inner {
 	padding: 0;
 	border: 0;
-}
-
-label {
-	cursor: pointer;
 }
 
 legend {

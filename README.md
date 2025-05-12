@@ -51,6 +51,13 @@ Run the backend
   uvicorn src.main:app
 ```
 
+### Docker
+Run the docker-compose
+
+```cmd
+  docker-compose up --build
+```
+
 ## API Reference
 
 ### Ping

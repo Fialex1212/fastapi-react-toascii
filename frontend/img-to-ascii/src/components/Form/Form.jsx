@@ -1,121 +1,100 @@
 import { useState } from "react";
-import css from "./styles.module.css";
-import cn from "classnames";
 import toast, { Toaster } from "react-hot-toast";
-import { PORT } from "../../utils/constans";
-import axios from "axios";
+import { getASCIIByFile, getASCIIByLink } from "../../utils/ascii";
 
 const Form = () => {
   const [imgLink, setImgLink] = useState("");
-  const [img, setImg] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [fileName, setFileName] = useState("Choise file");
+  const [imgPreview, setImgPreview] = useState(null);
 
-  const onChangeImg = (e) => {
+  const onChangeFile = (e) => {
     e.preventDefault();
     const selectedField = e.target.files[0];
     if (selectedField) {
-      setImg(selectedField);
+      setImageUrl(selectedField);
       setImgLink("");
+      setFileName(selectedField ? selectedField.name : "Choise file");
+      const reader = new FileReader();
+      reader.onloadend = () => setImgPreview(reader.result);
+      reader.readAsDataURL(selectedField);
     }
   };
 
   const onChangeImgLink = (e) => {
     const value = e.target.value;
     setImgLink(value);
-    setImg(null);
-  };
-
-  const getASCIIByLink = async () => {
-    try {
-      const response = await axios.post(`${PORT}/get-txt-by-img-url`, null, {
-        params: { url: imgLink },
-        responseType: "blob",
-      });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "ascii.txt");
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      toast.success("Successfully loaded");
-      console.log(response.data);
-    } catch (error) {
-      const errorMessage = error.response
-        ? error.response.data.detail
-        : "An unknown error occurred";
-      toast.error(errorMessage);
-    }
-  };
-
-  const getASCIIByImg = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("file", img);
-      const response = await axios.post(
-        `${PORT}/get-txt-by-img-file`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          responseType: "blob",
-        }
-      );
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "ascii.txt");
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      toast.success("Successfully loaded");
-      console.log(response.data);
-    } catch (error) {
-      toast.error(
-        "Error loading ASCII: " +
-          (error.response?.data?.message || error.message)
-      );
-    }
+    setImageUrl(null);
+    setImgPreview(value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!img && !imgLink) {
+    if (!imageUrl && !imgLink) {
       toast.error("Please select an image or provide a link");
-    } else if (img) {
-      getASCIIByImg();
+    } else if (imageUrl) {
+      getASCIIByFile(imageUrl);
     } else {
-      getASCIIByLink();
+      getASCIIByLink(imgLink);
     }
   };
 
-  //TODO add image preveiw for link and image
-  //TODO also use TailwindCSS instead of styles.module.css
-  //TODO preview
-
   return (
-    <section className={css.form__section}>
+    <section>
       <Toaster />
-      <div className="container">
-        <div className={css.form__inner}>
-          <form className={css.form} onSubmit={handleSubmit}>
-            <label>
-              <input
-                className={cn(css.form__input)}
-                type="text"
-                value={imgLink}
-                placeholder="Image link"
-                onChange={onChangeImgLink}
-              />
-            </label>
-            <label>
-              <input
-                className={css.form__input__file}
-                type="file"
-                onChange={onChangeImg}
-              />
-            </label>
-            <button className={css.form__btn} type="submit">
+      <div className="container mx-auto">
+        <div className="flex justify-center items-center h-[calc(100vh-44px)] ">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col justify-center items-center row-gap-[30px] gap-[30px] px-[30px] w-full max-w-[320px] md:max-w-[400px] min-h-[440px]  bg-[var(--blocks-color)] rounded-[10px]"
+          >
+            {imgPreview ? (
+              <>
+                <div className="flex flex-col">
+                  <img
+                    src={imgPreview}
+                    alt="Preview"
+                    className="w-[200px] h-[200px] object-cover"
+                  />
+                  <button
+                    className="cursor-pointer"
+                    onClick={() => setImgPreview(null)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <label>
+                  <input
+                    type="text"
+                    value={imgLink}
+                    onChange={onChangeImgLink}
+                    placeholder="Image link"
+                    className="w-[250px] h-[50px] p-[10px] border-[2px] border-blue-200 rounded-[10px] transition duration-300 hover:border-blue-200 focus:border-blue-200 outline-none"
+                  />
+                </label>
+                <label>
+                  <p
+                    htmlFor="file-upload"
+                    className="w-[250px] h-[50px] cursor-pointer border rounded flex items-center justify-start truncate"
+                  >
+                    {fileName}
+                  </p>
+                  <input
+                    id="file-upload"
+                    type="file"
+                    onChange={onChangeFile}
+                    className="hidden"
+                  />
+                </label>
+              </>
+            )}
+            <button
+              type="submit"
+              className="w-[150px] h-[50px] rounded-[10px] transition duration-300 bg-blue-200 text-black hover:scale-110 hover:cursor-pointer"
+            >
               Submit
             </button>
           </form>

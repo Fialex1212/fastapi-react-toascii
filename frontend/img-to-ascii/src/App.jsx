@@ -4,10 +4,10 @@ import Form from "./components/Form/Form"
 function App() {
 
   return (
-    <>
+    <div className="flex flex-col">
       <Form />
       <Footer />
-    </>
+    </div>
   )
 }
 
