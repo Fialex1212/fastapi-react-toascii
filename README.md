@@ -58,6 +58,10 @@ Run the docker-compose
   docker-compose up --build
 ```
 
+Backend by this path - http://127.0.0.1:8000/
+
+Frontend by this path - http://localhost:4173/
+
 ## API Reference
 
 ### Ping
